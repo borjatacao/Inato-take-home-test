@@ -29,20 +29,11 @@ describe("Pharmacy", () => {
 
 describe("Pharmacy", () => {
   it("Typical drug should decrease the benefit twice once expired until it reaches 0", () => {
-    expect(new Pharmacy([new Drug("test", 0, 1)]).updateBenefitValue()).toEqual(
-      [new Drug("test", -1, 0)]
+    expect(new Pharmacy([new Drug("test", -1, 1)]).updateBenefitValue()).toEqual(
+      [new Drug("test", -2, 0)]
     );
   });
 });
-
-describe("Pharmacy", () => {
-  it("Typical drug should decrease expiresIn but not benefit once it reaches 0 even when expired", () => {
-    expect(new Pharmacy([new Drug("test", -2, 1)]).updateBenefitValue()).toEqual(
-      [new Drug("test", -3, 0)]
-    );
-  });
-});
-
 
 /****************/
 /* Herbal Tea   */
@@ -153,6 +144,41 @@ describe("Pharmacy", () => {
   it("Fervex should let the benefit unchanged once it reaches 50 when 0 < expiresIn <= 5", () => {
     expect(new Pharmacy([new Drug("Fervex", 5, 49)]).updateBenefitValue()).toEqual(
       [new Drug("Fervex", 4, 50)]
+    );
+  });
+});
+
+/****************/
+/* Dafalgan     */
+/****************/
+describe("Pharmacy", () => {
+  it("Dafalgan should decrease the benefit by 2 and expiresIn before expiration", () => {
+    expect(new Pharmacy([new Drug("Dafalgan", 2, 3)]).updateBenefitValue()).toEqual(
+      [new Drug("Dafalgan", 1, 1)]
+    );
+  });
+});
+
+describe("Pharmacy", () => {
+  it("Dafalgan should decrease expiresIn but not benefit once it reaches 0", () => {
+    expect(new Pharmacy([new Drug("Dafalgan", 2, 1)]).updateBenefitValue()).toEqual(
+      [new Drug("Dafalgan", 1, 0)]
+    );
+  });
+});
+
+describe("Pharmacy", () => {
+  it("Dafalgan should decrease the benefit times 4 once expired", () => {
+    expect(new Pharmacy([new Drug("Dafalgan", 0, 5)]).updateBenefitValue()).toEqual(
+      [new Drug("Dafalgan", -1, 1)]
+    );
+  });
+});
+
+describe("Pharmacy", () => {
+  it("Dafalgan should decrease the benefit times 4 once expired until it reaches 0", () => {
+    expect(new Pharmacy([new Drug("Dafalgan", -1, 3)]).updateBenefitValue()).toEqual(
+      [new Drug("Dafalgan", -2, 0)]
     );
   });
 });
